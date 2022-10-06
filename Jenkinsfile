@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Docker image webserver push') {
             steps{
-                withDockerRegistry(credentialsId: 'dockerhub'){
+                withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
                     sh 'sudo docker push $gitName/web-server:""$BUILD_NUMBER""'
                 }
             }
