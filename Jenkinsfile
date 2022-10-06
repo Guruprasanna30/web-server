@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Deploy in Kubernetes') {
             steps {
-                withKubeConfig([credentialsID: 'kubeconfig']){
+                withKubeConfig([credentialsId: 'kubeconfig']){
                     sh "bash k8s-deployment.sh"
                 }
             }
