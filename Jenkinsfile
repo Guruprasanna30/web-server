@@ -7,19 +7,15 @@ pipeline {
     stages {
         stage('Docker build webserver image') {
             steps {
-                sh 'sudo docker build -t $gitName/web-server:""$BUILD_NUMBER"" .'
-            }
-        }
-        stage ('Login'){
-            steps{
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'sudo docker build -t web-server:""$BUILD_NUMBER"" .'
+                sh 'sudo docker tag web-server:""$BUILD_NUMBER"" $gitName/web-server:""$BUILD_NUMBER""'
             }
         }
         stage('Docker image webserver push') {
             steps{
-                //withDockerRegistry([credentialsId: "dockerhub", url: "https://index.docker.io/v1/"]) {
+                withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
                     sh 'sudo docker push $gitName/web-server:""$BUILD_NUMBER""'
-                //}
+                }
             }
         }
     }
