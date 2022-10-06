@@ -7,7 +7,7 @@ pipeline {
         //added a stage
         stage('Docker build image') {
             steps {
-                sh 'docker build -t $gitName/webs-erver:""$BUILD_NUMBER"" .'
+                sh 'sudo docker build -t $gitName/webs-erver:""$BUILD_NUMBER"" .'
             }
         }
     }
