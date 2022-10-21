@@ -23,7 +23,7 @@ jobs:
       run: |
         dockerImageName=$(awk 'NR==1 {print $2}' Dockerfile)
         echo $dockerImageName
-        docker run --rm -v $WORKSPACE:/root/.cache/ aquasec/trivy:0.32.1 image --exit-code 1 --severity CRITICAL $dockerImageName
+        docker run --rm -v $WORKSPACE:/root/.cache/ aquasec/trivy:0.32.1 image --severity CRITICAL $dockerImageName
 
     - name: Build and Push
       uses: docker/build-push-action@v3
