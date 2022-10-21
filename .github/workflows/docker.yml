@@ -24,5 +24,5 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: ${{sercret.DOCKERHUB_USERNAME}}/webserver:latest
+        tags: ${{secrets.DOCKERHUB_USERNAME}}/webserver:latest
   
