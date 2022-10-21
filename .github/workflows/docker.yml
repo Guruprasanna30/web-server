@@ -19,20 +19,25 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    
+    - name: Trivy scanner for Base Image
+      run: |
+        dockerImageName=$(awk 'NR==1 {print $2}' Dockerfile)
+        echo $dockerImageName
+        docker run --rm -v $WORKSPACE:/root/.cache/ aquasec/trivy:0.32.1 --light $dockerImageName
+
     - name: Build and Push
       uses: docker/build-push-action@v3
       with:
         push: true
         tags: ${{secrets.DOCKERHUB_USERNAME}}/webserver:${{ github.sha }}
 
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: 'docker.io/${{secrets.DOCKERHUB_USERNAME}}/webserver:${{ github.sha }}'
-        format: 'table'
-        exit-code: '1'
-        ignore-unfixed: true
-        vuln-type: 'os,library'
-        severity: 'CRITICAL'
+    # - name: Run Trivy vulnerability scanner
+    #   uses: aquasecurity/trivy-action@master
+    #   with:
+    #     image-ref: 'docker.io/${{secrets.DOCKERHUB_USERNAME}}/webserver:${{ github.sha }}'
+    #     format: 'table'
+    #     exit-code: '1'
+    #     ignore-unfixed: true
+    #     vuln-type: 'os,library'
+    #     severity: 'CRITICAL'
   
