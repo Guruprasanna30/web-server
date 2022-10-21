@@ -23,7 +23,7 @@ jobs:
       run: |
         dockerImageName=$(awk 'NR==1 {print $2}' Dockerfile)
         echo $dockerImageName
-        docker run --rm -v $WORKSPACE:/root/.cache/ aquasec/trivy:0.32.1 --light $dockerImageName
+        docker run --rm -v $WORKSPACE:/root/.cache/ aquasec/trivy:0.32.1 $dockerImageName
 
     - name: Build and Push
       uses: docker/build-push-action@v3
